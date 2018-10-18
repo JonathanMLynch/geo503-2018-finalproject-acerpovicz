@@ -1,13 +1,19 @@
 ---
-title: "I have the best titles"
-author: Your name here
-subtitle: Subtitle here if desired
+title: "California Drought and the Almond Crisis??"
+author: Alexandria Cerpovicz
+subtitle: Drought, Forest Fires and Almond Farming
 ---
+[<i class="fa fa-file-code-o fa-1x" aria-hidden="true"></i> Download this file as a template ](`r knitr::current_input()`).
 
 # Introduction
-My really awesome and complete introduction will go here.  
 
 > I know words.  I have the best words.  ~ Donald Trump
+
+## Introduction to problem/question
+Drought on the western coast of the United States have gained more and more media attention in recent years. Drought typically coincides with the drainage of water reservoirs, forest fires and crop loss. This study is intended to look into the current issues at hand, and forcast the near future state of affairs in California.
+  
+## Problem / Question
+What is the current trend in drought level compared to water reservoir level in California and what does this trend mean for future forcasting/water management?
 
 # Materials and methods
 
@@ -27,6 +33,21 @@ You can do numbers like this:
 
 See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
 
+## Proposed methods
+
+Packages used in this study include:
+*ggplot2
+*plotly
+*forcast
+
+1. All datasets will be imported into R Studio and cleaned. Ggplot will be used to create a simple visual model of California drought severity over time. This graph will provide the basis for further analysis. 
+2.An interactive heat map, as well as an interactive reservoir drainage map will be created using plotly. These figures will create a clearer picture of what the severity of future droughts may mean for certain areas in the state that may be at a greater risk for drought and drainage.
+3.Changes in produce prices associated with drought in the state will be illustrated on a bar graph using ggplot. 
+These four figures will together describe the current situation in the state. 
+4.The future drought risk in the state will be measured using the package 'forecast'. This package is created to forcast for linear models in time series.
+
+![](https://github.com/robjhyndman/forecast)
+I will use mf=meanf() in the forecast library to forcast the mean continuing drought severity for 10 years. I will then test the accuracy of the new outcome using the fuction accuracy(mf). I will plot my forecasted drought severity values using ggplot, as I outlined above for the original figure.
 
 Here's my first code chunk.
 ```{r}
@@ -71,6 +92,26 @@ ggplot(d,aes(x=longitude,y=latitude))+
 
 # Results
 
+## Example 1
+![](https://www.epa.gov/sites/production/files/styles/large/public/2016-07/drought-figure2-2016.png)
+This graphic shows the changes in dryness through time in US. land areas. This graphic can be created in ggplot2 to show the dryness levels in the state of California over recent years. I selected this image because I would be able to show multiple levels of drought rather than just one line of mean dryness.
+
+## Example 2
+![](https://www.r-graph-gallery.com/112-overlaid-interactive-histogram-plotly/feed/)
+
+This interactive heat map will be an interesting way to visualize drought and reservoir depletion levels in California. I will make the plot fit the outline of the state so certain areas of interest can be zoomed into by the viewer. The interactive map will be made using plotly.
+
+## Example 3
+![](https://www.theepochtimes.com/assets/uploads/2015/04/09/prince_increase_large.jpg)
+This example shows the percent price changes for food in the US. A graph similar to this would be a good way to display changing California average produce costs during different levels of drought. A bar graph/ bar plot such as this can be greated in ggplot 2.
+### Proposed data sources
+
+https://github.com/USGS-VIZLAB/CIDA-Viz.gitR
+
+## Expected results
+
+I expect to produce one figure showing California drought severity over time, one interactive heat and reservoir drainage map, one bar graph showing the effect of changing drought severity on produce values, and one figure showing the forcasted drought severity for the next ten years. I will analyze this forcasted drought severity through basic ststistical means including minimum, maximum and average values over the future ten years. Lastly, I will test for accuracy in my forcasted model. 
+
 Show tables, plots, etc. and describe them.
 
 ```{r}
@@ -83,3 +124,4 @@ What have you learned?  Are there any broader implications?
 
 # References
 
+https://github.com/USGS-VIZLAB/CIDA-Viz.gitR
