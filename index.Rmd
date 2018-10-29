@@ -16,6 +16,16 @@ What is the current trend in drought level compared to water reservoir level in 
 
 # Materials and methods
 
+## Data Set Import
+> house_loss <- read.csv("~/Desktop/house_loss.txt")
+>   View(house_loss)
+> View(house_loss)
+> View(house_loss)
+> library(readr)
+> house_loss <- read_delim("~/Desktop/house_loss.txt", 
++     "\t", escape_double = FALSE, trim_ws = TRUE, 
++     skip = 1)
+
 Narrative and most code will go here.  Describe what you are doing and show how to do it (with code).
 
 You can do bullets like this:
