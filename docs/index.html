@@ -12,7 +12,7 @@
 <meta name="author" content="Alexandria Cerpovicz" />
 
 
-<title>California Drought and the Almond Crisis??</title>
+<title>Australian Fires and House Loss</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -303,8 +303,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">California Drought and the Almond Crisis??</h1>
-<h3 class="subtitle"><em>Drought, Forest Fires and Almond Farming</em></h3>
+<h1 class="title toc-ignore">Australian Fires and House Loss</h1>
+<h3 class="subtitle"><em>Brush Fires and Proximity of Fuel to Homes</em></h3>
 <h4 class="author"><em>Alexandria Cerpovicz</em></h4>
 
 </div>
@@ -312,20 +312,35 @@ div.tocify {
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<blockquote>
-<p>I know words. I have the best words. ~ Donald Trump</p>
-</blockquote>
-<div id="introduction-to-problemquestion" class="section level2">
-<h2>Introduction to problem/question</h2>
 <p>Drought on the western coast of the United States have gained more and more media attention in recent years. Drought typically coincides with the drainage of water reservoirs, forest fires and crop loss. This study is intended to look into the current issues at hand, and forcast the near future state of affairs in California.</p>
-</div>
 <div id="problem-question" class="section level2">
 <h2>Problem / Question</h2>
 <p>What is the current trend in drought level compared to water reservoir level in California and what does this trend mean for future forcasting/water management?</p>
 </div>
 </div>
+<div id="data-sets" class="section level1">
+<h1>Data Sets</h1>
+<div id="australian-house-loss-data-set-import" class="section level2">
+<h2>Australian House Loss Data Set Import</h2>
+<blockquote>
+<p>house_loss &lt;- read.csv(“<sub>/Desktop/house_loss.txt“) View(house_loss) View(house_loss) View(house_loss) library(readr) house_loss &lt;- read_delim(”</sub>/Desktop/house_loss.txt”, + “”, escape_double = FALSE, trim_ws = TRUE, + skip = 1)</p>
+</blockquote>
+<div id="data-set-description" class="section level3">
+<h3>Data Set Description</h3>
+<p>“Losses to life and property from unplanned fires (wildfires) are forecast to increase because of population growth in peri-urban areas and climate change. In response, there have been moves to increase fuel reduction—clearing, prescribed burning, biomass removal and grazing—to afford greater protection to peri-urban communities in fire-prone regions. But how effective are these measures? Severe wildfires in southern Australia in 2009 presented a rare opportunity to address this question empirically. We predicted that modifying several fuels could theoretically reduce house loss by 76%-97%, which would translate to considerably fewer wildfire-related deaths. However, maximum levels of fuel reduction are unlikely to be feasible at every house for logistical and environmental reasons. Significant fuel variables in a logistic regression model we selected to predict house loss were (in order of decreasing effect): (1) the cover of trees and shrubs within 40m of houses, (2) whether trees and shrubs within 40m of houses was predominantly remnant or planted, (3) the upwind distance from houses to groups of trees or shrubs, (4) the upwind distance from houses to public forested land (irrespective of whether it was managed for nature conservation or logging), (5) the upwind distance from houses to prescribed burning within 5 years, and (6) the number of buildings or structures within 40m of houses. All fuel treatments were more effective if undertaken closer to houses. For example, 15% fewer houses were destroyed if prescribed burning occurred at the observed minimum distance from houses (0.5km) rather than the observed mean distance from houses (8.5km). Our results imply that a shift in emphasis away from broad-scale fuel-reduction to intensive fuel treatments close to property will more effectively mitigate impacts from wildfires on peri-urban communities.”</p>
+</div>
+<div id="data-set-authors" class="section level3">
+<h3>Data Set Authors</h3>
+<p>Philip Gibbons; David B. Lindenmayer; Linda van Bommel; A. Malcolm Gill; Geoffrey J. Cary; Don A. iscoll; Ross A. Bradstock; Emma A. Knight; Max A. Moritz; Scott L. Stephens</p>
+</div>
+</div>
+<div id="austrialian-brushfires-and-prescribed-burns-data-set" class="section level2">
+<h2>Austrialian Brushfires and Prescribed Burns Data Set</h2>
+<p>install.packages(c(“httr”, “jsonlite”)) library(tidyverse) library(httr) library(jsonlite) url_fires &lt;- ‘<a href="http://www.waterconnect.sa.gov.au/Content/Downloads/DEWNR/FIREMGT_FireHistory_shp.zip" class="uri">http://www.waterconnect.sa.gov.au/Content/Downloads/DEWNR/FIREMGT_FireHistory_shp.zip</a>)’ GET(url= paste0(url_fires)) names(url_fires)</p>
+</div>
+</div>
 <div id="materials-and-methods" class="section level1">
-<h1>Materials and methods</h1>
+<h1>Materials and Methods</h1>
 <p>Narrative and most code will go here. Describe what you are doing and show how to do it (with code).</p>
 <p>You can do bullets like this:</p>
 <ul>
@@ -371,13 +386,11 @@ knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling</code
 </div>
 <div id="example-3" class="section level2">
 <h2>Example 3</h2>
-<p><img src="https://www.theepochtimes.com/assets/uploads/2015/04/09/prince_increase_large.jpg" /> This example shows the percent price changes for food in the US. A graph similar to this would be a good way to display changing California average produce costs during different levels of drought. A bar graph/ bar plot such as this can be greated in ggplot 2. ### Proposed data sources</p>
-<p><a href="https://github.com/USGS-VIZLAB/CIDA-Viz.gitR" class="uri">https://github.com/USGS-VIZLAB/CIDA-Viz.gitR</a></p>
+<p><img src="https://www.theepochtimes.com/assets/uploads/2015/04/09/prince_increase_large.jpg" /> This example shows the percent price changes for food in the US. A graph similar to this would be a good way to display changing California average produce costs during different levels of drought. A bar graph/ bar plot such as this can be greated in ggplot 2.</p>
 </div>
 <div id="expected-results" class="section level2">
 <h2>Expected results</h2>
-<p>I expect to produce one figure showing California drought severity over time, one interactive heat and reservoir drainage map, one bar graph showing the effect of changing drought severity on produce values, and one figure showing the forcasted drought severity for the next ten years. I will analyze this forcasted drought severity through basic ststistical means including minimum, maximum and average values over the future ten years. Lastly, I will test for accuracy in my forcasted model.</p>
-<p>Show tables, plots, etc. and describe them.</p>
+<p>I expect to produce one figure showing Austrialian wildfire occurence and severity over time, one interactive wildfire map, one bar graph showing the effect of changing fire occurence and house loss, and one figure showing the how the amount of fuel present changes fire severity. I will analyze the amount of fuel’s severity through basic statistical means including minimum, maximum and average values.</p>
 </div>
 </div>
 <div id="conclusions" class="section level1">
@@ -386,7 +399,7 @@ knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling</code
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
-<p><a href="https://github.com/USGS-VIZLAB/CIDA-Viz.gitR" class="uri">https://github.com/USGS-VIZLAB/CIDA-Viz.gitR</a></p>
+<p><a href="https://data.gov.au/dataset/fire-history/resource/0f1d159a-6302-4e51-b0c3-6f6beb43ee9a" class="uri">https://data.gov.au/dataset/fire-history/resource/0f1d159a-6302-4e51-b0c3-6f6beb43ee9a</a> <a href="https://datadryad.org/resource/doi:10.5061/dryad.0875q1v2" class="uri">https://datadryad.org/resource/doi:10.5061/dryad.0875q1v2</a></p>
 </div>
 
 <!-- give the footer some space -->

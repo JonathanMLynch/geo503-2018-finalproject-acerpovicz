@@ -1,22 +1,19 @@
 ---
-title: "California Drought and the Almond Crisis??"
+title: "Australian Fires and House Loss"
 author: Alexandria Cerpovicz
-subtitle: Drought, Forest Fires and Almond Farming
+subtitle: Brush Fires and Proximity of Fuel to Homes
 ---
 
 # Introduction
 
-> I know words.  I have the best words.  ~ Donald Trump
-
-## Introduction to problem/question
 Drought on the western coast of the United States have gained more and more media attention in recent years. Drought typically coincides with the drainage of water reservoirs, forest fires and crop loss. This study is intended to look into the current issues at hand, and forcast the near future state of affairs in California.
   
 ## Problem / Question
 What is the current trend in drought level compared to water reservoir level in California and what does this trend mean for future forcasting/water management?
 
-# Materials and methods
+# Data Sets
 
-## Data Set Import
+## Australian House Loss Data Set Import
 > house_loss <- read.csv("~/Desktop/house_loss.txt")
 >   View(house_loss)
 > View(house_loss)
@@ -25,6 +22,24 @@ What is the current trend in drought level compared to water reservoir level in 
 > house_loss <- read_delim("~/Desktop/house_loss.txt", 
 +     "\t", escape_double = FALSE, trim_ws = TRUE, 
 +     skip = 1)
+
+### Data Set Description
+"Losses to life and property from unplanned fires (wildfires) are forecast to increase because of population growth in peri-urban areas and climate change. In response, there have been moves to increase fuel reduction—clearing, prescribed burning, biomass removal and grazing—to afford greater protection to peri-urban communities in fire-prone regions. But how effective are these measures? Severe wildfires in southern Australia in 2009 presented a rare opportunity to address this question empirically. We predicted that modifying several fuels could theoretically reduce house loss by 76%-97%, which would translate to considerably fewer wildfire-related deaths. However, maximum levels of fuel reduction are unlikely to be feasible at every house for logistical and environmental reasons. Significant fuel variables in a logistic regression model we selected to predict house loss were (in order of decreasing effect): (1) the cover of trees and shrubs within 40m of houses, (2) whether trees and shrubs within 40m of houses was predominantly remnant or planted, (3) the upwind distance from houses to groups of trees or shrubs, (4) the upwind distance from houses to public forested land (irrespective of whether it was managed for nature conservation or logging), (5) the upwind distance from houses to prescribed burning within 5 years, and (6) the number of buildings or structures within 40m of houses. All fuel treatments were more effective if undertaken closer to houses. For example, 15% fewer houses were destroyed if prescribed burning occurred at the observed minimum distance from houses (0.5km) rather than the observed mean distance from houses (8.5km). Our results imply that a shift in emphasis away from broad-scale fuel-reduction to intensive fuel treatments close to property will more effectively mitigate impacts from wildfires on peri-urban communities." 
+
+### Data Set Authors
+
+Philip Gibbons; David B. Lindenmayer; Linda van Bommel; A. Malcolm Gill; Geoffrey J. Cary; Don A. iscoll; Ross A. Bradstock; Emma A. Knight; Max A. Moritz; Scott L. Stephens
+
+## Austrialian Brushfires and Prescribed Burns Data Set
+install.packages(c("httr", "jsonlite"))
+library(tidyverse)
+library(httr)
+library(jsonlite)
+url_fires <- 'http://www.waterconnect.sa.gov.au/Content/Downloads/DEWNR/FIREMGT_FireHistory_shp.zip)'
+GET(url= paste0(url_fires))
+names(url_fires)
+
+#Materials and Methods
 
 Narrative and most code will go here.  Describe what you are doing and show how to do it (with code).
 
@@ -85,20 +100,16 @@ This interactive heat map will be an interesting way to visualize drought and re
 ## Example 3
 ![](https://www.theepochtimes.com/assets/uploads/2015/04/09/prince_increase_large.jpg)
 This example shows the percent price changes for food in the US. A graph similar to this would be a good way to display changing California average produce costs during different levels of drought. A bar graph/ bar plot such as this can be greated in ggplot 2.
-### Proposed data sources
 
-https://github.com/USGS-VIZLAB/CIDA-Viz.gitR
 
 ## Expected results
 
-I expect to produce one figure showing California drought severity over time, one interactive heat and reservoir drainage map, one bar graph showing the effect of changing drought severity on produce values, and one figure showing the forcasted drought severity for the next ten years. I will analyze this forcasted drought severity through basic ststistical means including minimum, maximum and average values over the future ten years. Lastly, I will test for accuracy in my forcasted model. 
-
-Show tables, plots, etc. and describe them.
+I expect to produce one figure showing Austrialian wildfire occurence and severity over time, one interactive wildfire map, one bar graph showing the effect of changing fire occurence and house loss, and one figure showing the how the amount of fuel present changes fire severity. I will analyze the amount of fuel's severity through basic statistical means including minimum, maximum and average values. 
 
 # Conclusions
 
 What have you learned?  Are there any broader implications?
 
 # References
-
-https://github.com/USGS-VIZLAB/CIDA-Viz.gitR
+https://data.gov.au/dataset/fire-history/resource/0f1d159a-6302-4e51-b0c3-6f6beb43ee9a
+https://datadryad.org/resource/doi:10.5061/dryad.0875q1v2
