@@ -6,7 +6,7 @@ subtitle: Brush Fires and Proximity of Fuel to Homes
 
 # Introduction
 
-Drought on the western coast of the United States have gained more and more media attention in recent years. Drought typically coincides with the drainage of water reservoirs, forest fires and crop loss. This study is intended to look into the current issues at hand, and forcast the near future state of affairs in California.
+House loss due to fires in southern Australia have gained more and more media attention in recent years. These fires have been found to be more severe in relation with the amount of "fuel" near the home. This study used data on the amount of brush and other buildings within 40m of homes in southern Australia and the amount of fire fighter responses to fires in this region to illustrate the most significant cause of burnt homes, brush fires or fires starting within homes. This study is intended to look into the current issues at hand, and forcast the near future state of affairs in California.
   
 ## Problem / Question
 What is the current trend in drought level compared to water reservoir level in California and what does this trend mean for future forcasting/water management?
@@ -33,11 +33,13 @@ Philip Gibbons; David B. Lindenmayer; Linda van Bommel; A. Malcolm Gill; Geoffre
 ## South Australian Country Fire Service Current Incidents
 read.xml("http://www.cfs.sa.gov.au/custom/criimson/CFS_Current_Incidents.xml")
 
+install.packages("XML")
+library(XML)
+xml("http://www.cfs.sa.gov.au/custom/criimson/CFS_Current_Incidents.xml")
+
 #Materials and Methods
 
-Narrative and most code will go here.  Describe what you are doing and show how to do it (with code).
-
-
+Describe what you are doing and show how to do it (with code).
 See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
 
 ## Proposed methods
@@ -47,7 +49,7 @@ Packages used in this study include:
 *plotly
 *forcast
 
-1. All datasets will be imported into R Studio and cleaned. Ggplot will be used to create a simple visual model of California drought severity over time. This graph will provide the basis for further analysis. 
+1. All datasets will be imported into R Studio and cleaned. Ggplot will be used to create a simple visual model of homes burnt over time. This graph will provide the basis for further analysis. 
 2.An interactive heat map, as well as an interactive reservoir drainage map will be created using plotly. These figures will create a clearer picture of what the severity of future droughts may mean for certain areas in the state that may be at a greater risk for drought and drainage.
 3.Changes in produce prices associated with drought in the state will be illustrated on a bar graph using ggplot. 
 These four figures will together describe the current situation in the state. 
