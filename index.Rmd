@@ -40,10 +40,9 @@ leaflet(data = na.omit(x)) %>%
 
 # Standard meteorological data at buoy 41052
 ```{r}
-buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
+st_john_data <- buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
+head(st_john_data)
 ```
-
-
 
 
 # Results
@@ -56,21 +55,19 @@ library("ggmap")
 ```
 
 ```{r}
-st_john <- c(left = 64.60, bottom = 17, right = 64.45, top = 18.30)
-
-"st_john_map" <- get_stamenmap(st_john, zoom = 5, maptype = "toner-lite")
-
+st_john <- c(left = 64.60, bottom = 17, right = 64.45, top = 18.30) %/%
+st_john_map <- get_stamenmap(st_john, zoom = 5)%/%
 ggmap(st_john_map, x= x.major, y= y.range[1])
 ```
 
 ![](https://www.epa.gov/sites/production/files/styles/large/public/2016-07/drought-figure2-2016.png)
 
 
-## Example 2
+## Severe Weather in St. John During Hurricane Season 2017
 
-## Example 3
+swdi(dataset='warn', startdate = '20170601', enddate = '20171101', id=41052)
 
-## Expected results
+## Wave Height Before During and After Hurricane
 
 
 # Conclusions
@@ -78,5 +75,5 @@ ggmap(st_john_map, x= x.major, y= y.range[1])
 What have you learned?  Are there any broader implications?
 
 # References
-
+Scott Chamberlain (2017). rnoaa: ‘NOAA’ Weather Data from R. R package version 0.7.0. https://CRAN.R-project.org/package=rnoaa
 
