@@ -1,46 +1,16 @@
 ---
-title: "Australian Fires and House Loss"
-author: Alexandria Cerpovicz
-subtitle: Brush Fires and Proximity of Fuel to Homes
+title: "Wave Patterns Before, During and After Hurricanes"
+author: "Alexandria Cerpovicz"
+subtitle: Wave hieght and direction before and after Hurricanes Irma and Maria in
+  St. John, USVI
 ---
 
 # Introduction
 
-House loss due to fires in southern Australia have gained more and more media attention in recent years. These fires have been found to be more severe in relation with the amount of "fuel" near the home. This study used data on the amount of brush and other buildings within 40m of homes in southern Australia and the amount of fire fighter responses to fires in this region to illustrate the most significant cause of burnt homes, brush fires or fires starting within homes. This study is intended to look into the current issues at hand, and forcast the near future state of affairs in California.
-  
 ## Problem / Question
-What is the current trend in drought level compared to water reservoir level in California and what does this trend mean for future forcasting/water management?
 
-# Data Sets
-
-## Australian House Loss Data Set Import
-> house_loss <- read.csv("~/Desktop/house_loss.txt")
->   View(house_loss)
-> View(house_loss)
-> View(house_loss)
-> library(readr)
-> house_loss <- read_delim("~/Desktop/house_loss.txt", 
-+     "\t", escape_double = FALSE, trim_ws = TRUE, 
-+     skip = 1)
-
-### Data Set Description
-"Losses to life and property from unplanned fires (wildfires) are forecast to increase because of population growth in peri-urban areas and climate change. In response, there have been moves to increase fuel reduction—clearing, prescribed burning, biomass removal and grazing—to afford greater protection to peri-urban communities in fire-prone regions. But how effective are these measures? Severe wildfires in southern Australia in 2009 presented a rare opportunity to address this question empirically. We predicted that modifying several fuels could theoretically reduce house loss by 76%-97%, which would translate to considerably fewer wildfire-related deaths. However, maximum levels of fuel reduction are unlikely to be feasible at every house for logistical and environmental reasons. Significant fuel variables in a logistic regression model we selected to predict house loss were (in order of decreasing effect): (1) the cover of trees and shrubs within 40m of houses, (2) whether trees and shrubs within 40m of houses was predominantly remnant or planted, (3) the upwind distance from houses to groups of trees or shrubs, (4) the upwind distance from houses to public forested land (irrespective of whether it was managed for nature conservation or logging), (5) the upwind distance from houses to prescribed burning within 5 years, and (6) the number of buildings or structures within 40m of houses. All fuel treatments were more effective if undertaken closer to houses. For example, 15% fewer houses were destroyed if prescribed burning occurred at the observed minimum distance from houses (0.5km) rather than the observed mean distance from houses (8.5km). Our results imply that a shift in emphasis away from broad-scale fuel-reduction to intensive fuel treatments close to property will more effectively mitigate impacts from wildfires on peri-urban communities." 
-
-### Data Set Authors
-
-Philip Gibbons; David B. Lindenmayer; Linda van Bommel; A. Malcolm Gill; Geoffrey J. Cary; Don A. iscoll; Ross A. Bradstock; Emma A. Knight; Max A. Moritz; Scott L. Stephens
-
-## South Australian Country Fire Service Current Incidents
-read.xml("http://www.cfs.sa.gov.au/custom/criimson/CFS_Current_Incidents.xml")
-
-install.packages("XML")
-library(XML)
-xml("http://www.cfs.sa.gov.au/custom/criimson/CFS_Current_Incidents.xml")
 
 #Materials and Methods
-
-Describe what you are doing and show how to do it (with code).
-See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
 
 ## Proposed methods
 
@@ -49,54 +19,64 @@ Packages used in this study include:
 *plotly
 *forcast
 
-1. All datasets will be imported into R Studio and cleaned. Ggplot will be used to create a simple visual model of homes burnt over time. This graph will provide the basis for further analysis. 
-2.An interactive heat map, as well as an interactive reservoir drainage map will be created using plotly. These figures will create a clearer picture of what the severity of future droughts may mean for certain areas in the state that may be at a greater risk for drought and drainage.
-3.Changes in produce prices associated with drought in the state will be illustrated on a bar graph using ggplot. 
-These four figures will together describe the current situation in the state. 
-4.The future drought risk in the state will be measured using the package 'forecast'. This package is created to forcast for linear models in time series.
-
-![](https://github.com/robjhyndman/forecast)
-I will use mf=meanf() in the forecast library to forcast the mean continuing drought severity for 10 years. I will then test the accuracy of the new outcome using the fuction accuracy(mf). I will plot my forecasted drought severity values using ggplot, as I outlined above for the original figure.
-
-
-Load any required packages in a code chunk (you may need to install some packages):
-
+# Data Sets
 ```{r, message=F, warning=F}
-library(dplyr)
-library(ggplot2)
-library(maps)
-library(spocc)
-knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
+install.packages("rnoaa")
+library(rnoaa)
+install.packages("ncdf4")
+library(ncdf4)
+install.packages("leaflet")
+library("leaflet")
+knitr::opts_chunk$set(cache=TRUE)
 ```
+
+# NOAA buoy stations information
+```{r}
+x <- buoy_stations()
+leaflet(data = na.omit(x)) %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircles(~lon, ~lat, opacity = 0.5)
+```
+
+# Standard meteorological data at buoy 41052
+```{r}
+buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
+```
+
 
 
 
 # Results
 
-## Example 1
+## Example 1: Map of Buoy Location
+
+```{r}
+install.packages("ggmap")
+library("ggmap")
+```
+
+```{r}
+st_john <- c(left = 64.60, bottom = 17, right = 64.45, top = 18.30)
+
+"st_john_map" <- get_stamenmap(st_john, zoom = 5, maptype = "toner-lite")
+
+ggmap(st_john_map, x= x.major, y= y.range[1])
+```
+
 ![](https://www.epa.gov/sites/production/files/styles/large/public/2016-07/drought-figure2-2016.png)
-This graphic shows the changes in dryness through time in US. land areas. This graphic can be created in ggplot2 to show the dryness levels in the state of California over recent years. I selected this image because I would be able to show multiple levels of drought rather than just one line of mean dryness.
+
 
 ## Example 2
-![](https://www.r-graph-gallery.com/112-overlaid-interactive-histogram-plotly/feed/)
-
-This interactive heat map will be an interesting way to visualize drought and reservoir depletion levels in California. I will make the plot fit the outline of the state so certain areas of interest can be zoomed into by the viewer. The interactive map will be made using plotly.
 
 ## Example 3
-![](https://www.theepochtimes.com/assets/uploads/2015/04/09/prince_increase_large.jpg)
-This example shows the percent price changes for food in the US. A graph similar to this would be a good way to display changing California average produce costs during different levels of drought. A bar graph/ bar plot such as this can be greated in ggplot 2.
-
 
 ## Expected results
 
-I expect to produce one figure showing Austrialian wildfire occurence and severity over time, one interactive wildfire map, one bar graph showing the effect of changing fire occurence and house loss, and one figure showing the how the amount of fuel present changes fire severity. I will analyze the amount of fuel's severity through basic statistical means including minimum, maximum and average values. 
 
 # Conclusions
 
 What have you learned?  Are there any broader implications?
 
 # References
-https://data.gov.au/dataset/fire-history/resource/0f1d159a-6302-4e51-b0c3-6f6beb43ee9a
-https://datadryad.org/resource/doi:10.5061/dryad.0875q1v2
-https://data.gov.au/dataset/south-australian-country-fire-service-current-incidents-rss-feed
+
 
