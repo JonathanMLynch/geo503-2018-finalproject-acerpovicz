@@ -3,6 +3,7 @@ title: "Wave Patterns Before, During and After Hurricanes"
 author: "Alexandria Cerpovicz"
 subtitle: Wave hieght and direction before and after Hurricanes Irma and Maria in
   St. John, USVI
+output: pdf_document
 ---
 
 # Introduction
@@ -21,11 +22,8 @@ Packages used in this study include:
 
 # Data Sets
 ```{r, message=F, warning=F}
-install.packages("rnoaa")
 library(rnoaa)
-install.packages("ncdf4")
 library(ncdf4)
-install.packages("leaflet")
 library("leaflet")
 knitr::opts_chunk$set(cache=TRUE)
 ```
@@ -50,14 +48,13 @@ head(st_john_data)
 ## Example 1: Map of Buoy Location
 
 ```{r}
-install.packages("ggmap")
 library("ggmap")
 ```
 
 ```{r}
-st_john <- c(left = 64.60, bottom = 17, right = 64.45, top = 18.30) %/%
-st_john_map <- get_stamenmap(st_john, zoom = 5)%/%
-ggmap(st_john_map, x= x.major, y= y.range[1])
+"stjohn" <- c(left = 68, bottom = 18, right = 62, top = 20)%/%
+  get_stamenmap(stjohn, zoom = 5)%/%
+  ggmap()
 ```
 
 ![](https://www.epa.gov/sites/production/files/styles/large/public/2016-07/drought-figure2-2016.png)
@@ -69,6 +66,9 @@ swdi(dataset='warn', startdate = '20170601', enddate = '20171101', id=41052)
 
 ## Wave Height Before During and After Hurricane
 
+### Wave rose diagram of week before hurricanes
+### Wave rose diagram of each hurricane's peak wave dates
+### Wave rose diagram of week after each hurricane
 
 # Conclusions
 
@@ -76,4 +76,8 @@ What have you learned?  Are there any broader implications?
 
 # References
 Scott Chamberlain (2017). rnoaa: ‘NOAA’ Weather Data from R. R package version 0.7.0. https://CRAN.R-project.org/package=rnoaa
+https://ropensci.org/tutorials/rnoaa_tutorial/
+https://rmarkdown.rstudio.com/
+https://github.com/dkahle/ggmap
+
 
