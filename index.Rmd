@@ -9,16 +9,34 @@ output: pdf_document
 # Introduction
 
 ## Problem / Question
-
+What was the difference in wave heights before during and after hurricanes Irma and Maria passed St. John, USVI in 2017? What was the difference between the wave height between the two hurricanes. 
 
 #Materials and Methods
 
 ## Proposed methods
 
-Packages used in this study include:
-*ggplot2
-*plotly
-*forcast
+This study will use the following packages to answer the questions above. 
+
+1. To import the data from the buoy:
+  *rnoaa, to import buoy data
+  *ncdf4, to easily read in the buoy dataset
+  *leaflet, used to create interactive maps
+
+2. To import hurricane data:
+  *sf, to encode spatial vector data in a dataframe
+  *tidyverse
+  *rnoaa
+  *spData
+  *data(world)
+  *data(us_states)
+
+3. Wave rose digrams: to show the differences in wave heights before durning and after the two hurricanes:
+  * ggplot2, to make wave rose diagrams
+  * RColorBrewer, to make wave rose diagrams
+  
+4. Compare wave heights between two hurricanes:
+  * plotly, to create a time series line plot
+
 
 # Data Sets
 ```{r, message=F, warning=F}
