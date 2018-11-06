@@ -3,7 +3,9 @@ title: "Wave Patterns Before, During and After Hurricanes"
 author: "Alexandria Cerpovicz"
 subtitle: Wave hieght and direction before and after Hurricanes Irma and Maria in
   St. John, USVI
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Introduction
@@ -20,7 +22,7 @@ This study will use the following packages to answer the questions above.
 1. To import the data from the buoy:
   *rnoaa, to import buoy data
   *ncdf4, to easily read in the buoy dataset
-  *leaflet, used to create interactive maps
+  *leaflet, used to create interactive map of buoy locations
 
 2. To import hurricane data:
   *sf, to encode spatial vector data in a dataframe
@@ -38,7 +40,7 @@ This study will use the following packages to answer the questions above.
   * plotly, to create a time series line plot
 
 
-# Data Sets
+# Import Data Sets
 ```{r, message=F, warning=F}
 library(rnoaa)
 library(ncdf4)
@@ -60,6 +62,27 @@ st_john_data <- buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
 head(st_john_data)
 ```
 
+## Hurricane Data Import
+
+```{r}
+library(sf)
+library(tidyverse)
+library(ggmap)
+library(rnoaa)
+library(spData)
+data(world)
+data(us_states)
+```
+
+```{r}
+storm_shp(basin = "NA") %>%
+storm_shp_read() %>%
+st_as_sf() %>%
+filter(2017) %>%
+mutate_if(is.numeric, function(x) ifelse(x==-999.0,NA,x)) %>%
+mutate(month=(floor(year/12))) %>%
+st_bbox()
+```
 
 # Results
 
@@ -75,9 +98,6 @@ library("ggmap")
   ggmap()
 ```
 
-![](https://www.epa.gov/sites/production/files/styles/large/public/2016-07/drought-figure2-2016.png)
-
-
 ## Severe Weather in St. John During Hurricane Season 2017
 
 swdi(dataset='warn', startdate = '20170601', enddate = '20171101', id=41052)
@@ -87,6 +107,9 @@ swdi(dataset='warn', startdate = '20170601', enddate = '20171101', id=41052)
 ### Wave rose diagram of week before hurricanes
 ### Wave rose diagram of each hurricane's peak wave dates
 ### Wave rose diagram of week after each hurricane
+
+## Time Series Line Plot of Hurricane Wave Height Differences
+
 
 # Conclusions
 
