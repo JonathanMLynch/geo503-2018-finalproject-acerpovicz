@@ -1,7 +1,7 @@
 ---
 title: "Wave Patterns Before, During and After Hurricanes"
 author: "Alexandria Cerpovicz"
-subtitle: Wave hieght and direction before and after Hurricanes Irma and Maria in
+subtitle: Wave height and direction before and after Hurricanes Irma and Maria in
   St. John, USVI
 output:
   html_document:
@@ -111,7 +111,16 @@ swdi(dataset='warn', startdate = '19950601', enddate = '19951101', station = '41
 
 ## Time Series Line Plot of Hurricane Wave Height Differences
 
-st_john_hurricane_plot <- ggplot(st_john_data) + geom_line(aes(y= wave_height, x= time))
+```{r}
+st_john_df <- (st_john_data$data)
+ 
+st_john_hurricane_season <- st_john_df %>% mutate(month = substr(time, 6, 7)) %>% mutate(day= substr(time, 9, 10)) %>% filter(month %in% c("06","07", "08", "09", "10", "11"))
+  
+st_john_by_day <- st_john_hurricane_season %>% mutate(time= as.Date(paste0("2017", "-", month,"-", day))) %>% group_by(time) %>% summarize(wave_average= mean(wave_height,na.rm = T))
+
+st_john_hurricane_plot <- st_john_by_day %>% ggplot(aes(y= wave_average, x= time)) + geom_line()
+st_john_hurricane_plot
+```
 
 # Conclusions
 
