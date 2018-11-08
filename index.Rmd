@@ -17,7 +17,7 @@ What was the difference in wave heights before during and after hurricanes Irma 
 
 #Materials and Methods
 
-## Proposed methods
+## Proposed Methods
 
 This study will use the following packages to answer the questions above. 
 
@@ -50,13 +50,16 @@ library(leaflet)
 knitr::opts_chunk$set(cache=TRUE)
 ```
 
-## NOAA buoy stations information and map
+## NOAA Buoy Stations Information and Stations Map
 ```{r}
 allbuoystations <- buoy_stations()
 leaflet(data = na.omit(allbuoystations)) %>%
   leaflet::addTiles() %>%
   leaflet::addCircles(~lon, ~lat, opacity = 0.5)
+```
 
+## NOAA St. John Station Map
+```{r}
 stjohnbuoy <- filter(allbuoystations, station==41052)
 head(stjohnbuoy)
 leaflet(data = na.omit(stjohnbuoy)) %>%
@@ -67,7 +70,7 @@ leaflet(data = na.omit(stjohnbuoy)) %>%
 
 
 ## Standard meteorological data at buoy 41052
-```{r}
+```{r, message=F, warning=F}
 st_john_data <- buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
 head(st_john_data)
 ```
@@ -88,10 +91,10 @@ data(us_states)
 hurricanes <- storm_shp(basin = "NA") %>%
 storm_shp_read() %>%
 st_as_sf()
-hurricanes1995 <- filter(hurricanes, year == 1995) %>%
+hurricanes2 <- filter(hurricanes, year == 2017) %>%
 mutate_if(is.numeric, function(x) ifelse(x==-999.0,NA,x)) 
 table(hurricanes$year)
-head(hurricanes1995)
+head(hurricanes2)
 ```
 
 # Results
@@ -108,7 +111,7 @@ swdi(dataset='warn', startdate = '19950601', enddate = '19951101', station = '41
 
 ## Time Series Line Plot of Hurricane Wave Height Differences
 
-st_john_hurricane_plot <- ggplot(st_john_data) %>% geom_line(aes(y= wave_height, x= time))
+st_john_hurricane_plot <- ggplot(st_john_data) + geom_line(aes(y= wave_height, x= time))
 
 # Conclusions
 
