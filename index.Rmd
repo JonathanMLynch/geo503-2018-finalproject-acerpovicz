@@ -70,7 +70,7 @@ leaflet(data = na.omit(stjohnbuoy)) %>%
 
 
 ## Standard meteorological data at buoy 41052
-```{r, message=F, warning=F}
+```{r, echo= FALSE, results= 'hide', message=F, warning=F}
 st_john_data <- buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
 head(st_john_data)
 ```
