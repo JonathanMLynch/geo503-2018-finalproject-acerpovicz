@@ -6,6 +6,8 @@ subtitle: Wave hieght and direction before and after Hurricanes Irma and Maria i
 output:
   html_document:
     df_print: paged
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Introduction
@@ -44,19 +46,27 @@ This study will use the following packages to answer the questions above.
 ```{r, message=F, warning=F}
 library(rnoaa)
 library(ncdf4)
-library("leaflet")
+library(leaflet)
 knitr::opts_chunk$set(cache=TRUE)
 ```
 
-# NOAA buoy stations information
+## NOAA buoy stations information and map
 ```{r}
-x <- buoy_stations()
-leaflet(data = na.omit(x)) %>%
+allbuoystations <- buoy_stations()
+leaflet(data = na.omit(allbuoystations)) %>%
   leaflet::addTiles() %>%
   leaflet::addCircles(~lon, ~lat, opacity = 0.5)
+
+stjohnbuoy <- filter(allbuoystations, station==41052)
+head(stjohnbuoy)
+leaflet(data = na.omit(stjohnbuoy)) %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircles(~lon, ~lat, opacity = 0.5)
+
 ```
 
-# Standard meteorological data at buoy 41052
+
+## Standard meteorological data at buoy 41052
 ```{r}
 st_john_data <- buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
 head(st_john_data)
@@ -75,32 +85,20 @@ data(us_states)
 ```
 
 ```{r}
-storm_shp(basin = "NA") %>%
+hurricanes <- storm_shp(basin = "NA") %>%
 storm_shp_read() %>%
-st_as_sf() %>%
-filter(2017) %>%
-mutate_if(is.numeric, function(x) ifelse(x==-999.0,NA,x)) %>%
-mutate(month=(floor(year/12))) %>%
-st_bbox()
+st_as_sf()
+hurricanes1995 <- filter(hurricanes, year == 1995) %>%
+mutate_if(is.numeric, function(x) ifelse(x==-999.0,NA,x)) 
+table(hurricanes$year)
+head(hurricanes1995)
 ```
 
 # Results
 
-## Example 1: Map of Buoy Location
+## Severe Weather in St. John During Hurricane Season 1995
 
-```{r}
-library("ggmap")
-```
-
-```{r}
-"stjohn" <- c(left = 68, bottom = 18, right = 62, top = 20)%/%
-  get_stamenmap(stjohn, zoom = 5)%/%
-  ggmap()
-```
-
-## Severe Weather in St. John During Hurricane Season 2017
-
-swdi(dataset='warn', startdate = '20170601', enddate = '20171101', id=41052)
+swdi(dataset='warn', startdate = '19950601', enddate = '19951101', station = '41052')
 
 ## Wave Height Before During and After Hurricane
 
@@ -110,6 +108,7 @@ swdi(dataset='warn', startdate = '20170601', enddate = '20171101', id=41052)
 
 ## Time Series Line Plot of Hurricane Wave Height Differences
 
+st_john_hurricane_plot <- ggplot(st_john_data) %>% geom_line(aes(y= wave_height, x= time))
 
 # Conclusions
 
