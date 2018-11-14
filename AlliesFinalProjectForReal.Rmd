@@ -1,0 +1,134 @@
+---
+title: "Wave Patterns Before, During and After Hurricanes"
+author: "Alexandria Cerpovicz"
+subtitle: Wave height and direction before and after Hurricanes Irma and Maria in
+  St. John, USVI
+output:
+  html_document:
+    df_print: paged
+editor_options: 
+  chunk_output_type: console
+---
+
+# Introduction
+
+## Problem / Question
+What was the difference in wave heights before during and after hurricanes Irma and Maria passed St. John, USVI in 2017? What was the difference between the wave height between the two hurricanes. 
+
+#Materials and Methods
+
+## Proposed Methods
+
+This study will use the following packages to answer the questions above. 
+
+1. To import the data from the buoy:
+  *rnoaa, to import buoy data
+  *ncdf4, to easily read in the buoy dataset
+  *leaflet, used to create interactive map of buoy locations
+
+2. To import hurricane data:
+  *sf, to encode spatial vector data in a dataframe
+  *tidyverse
+  *rnoaa
+  *spData
+  *data(world)
+  *data(us_states)
+
+3. Wave rose digrams: to show the differences in wave heights before durning and after the two hurricanes:
+  * ggplot2, to make wave rose diagrams
+  * RColorBrewer, to make wave rose diagrams
+  
+4. Compare wave heights between two hurricanes:
+  * plotly, to create a time series line plot
+
+
+# Import Data Sets
+```{r, message=F, warning=F}
+library(rnoaa)
+library(ncdf4)
+library(leaflet)
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+## NOAA Buoy Stations Information and Stations Map
+```{r}
+allbuoystations <- buoy_stations()
+leaflet(data = na.omit(allbuoystations)) %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircles(~lon, ~lat, opacity = 0.5)
+```
+
+## NOAA St. John Station Map
+```{r}
+stjohnbuoy <- filter(allbuoystations, station==41052)
+leaflet(data = na.omit(stjohnbuoy)) %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircles(~lon, ~lat, opacity = 0.5)
+
+```
+
+
+## Standard meteorological data at buoy 41052
+```{r, echo= FALSE, results= 'hide', message=F, warning=F}
+st_john_data <- buoy(dataset = 'stdmet', buoyid = 41052, year = 2017)
+head(st_john_data)
+```
+
+## Hurricane Data Import
+
+```{r}
+library(sf)
+library(tidyverse)
+library(ggmap)
+library(rnoaa)
+library(spData)
+data(world)
+data(us_states)
+```
+
+```{r}
+hurricanes <- storm_shp(basin = "NA") %>%
+storm_shp_read() %>%
+st_as_sf()
+hurricanes2 <- filter(hurricanes, year == 2017) %>%
+mutate_if(is.numeric, function(x) ifelse(x==-999.0,NA,x)) 
+table(hurricanes$year)
+head(hurricanes2)
+```
+
+# Results
+
+## Severe Weather in St. John During Hurricane Season 1995
+
+swdi(dataset='warn', startdate = '19950601', enddate = '19951101', station = '41052')
+
+## Wave Height Before During and After Hurricane
+
+### Wave rose diagram of week before hurricanes
+### Wave rose diagram of each hurricane's peak wave dates
+### Wave rose diagram of week after each hurricane
+
+## Time Series Line Plot of Hurricane Wave Height Differences
+
+```{r}
+st_john_df <- (st_john_data$data)
+ 
+st_john_hurricane_season <- st_john_df %>% mutate(month = substr(time, 6, 7)) %>% mutate(day= substr(time, 9, 10)) %>% filter(month %in% c("06","07", "08", "09", "10", "11"))
+  
+st_john_by_day <- st_john_hurricane_season %>% mutate(time= as.Date(paste0("2017", "-", month,"-", day))) %>% group_by(time) %>% summarize(wave_average= mean(wave_height,na.rm = T))
+
+st_john_hurricane_plot <- st_john_by_day %>% ggplot(aes(y= wave_average, x= time)) + geom_line()
+st_john_hurricane_plot
+```
+
+# Conclusions
+
+What have you learned?  Are there any broader implications?
+
+# References
+Scott Chamberlain (2017). rnoaa: ‘NOAA’ Weather Data from R. R package version 0.7.0. https://CRAN.R-project.org/package=rnoaa
+https://ropensci.org/tutorials/rnoaa_tutorial/
+https://rmarkdown.rstudio.com/
+https://github.com/dkahle/ggmap
+
+
