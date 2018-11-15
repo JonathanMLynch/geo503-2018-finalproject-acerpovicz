@@ -60,7 +60,7 @@ leaflet(data = na.omit(allbuoystations)) %>%
 
 ## NOAA St. John Station Map
 ```{r}
-stjohnbuoy <- filter(allbuoystations, station==41052)
+stjohnbuoy <- filter(allbuoystations, station==41052) 
 head(stjohnbuoy)
 leaflet(data = na.omit(stjohnbuoy)) %>%
   leaflet::addTiles() %>%
